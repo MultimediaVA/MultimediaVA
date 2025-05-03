@@ -5,7 +5,7 @@ Welcome to the official GitHub Pages site for **Multimedia VA** — a digital pl
 ---
 
 ## 🌐 Live Site
-[Visit Multimedia VA](https://github.com/MultimediaVA/))  
+[Visit Multimedia VA](https://multimediava.com))  
 (Replace with your actual GitHub Pages URL or custom domain)
 
 ---
