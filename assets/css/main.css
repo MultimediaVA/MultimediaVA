@@ -61,6 +61,7 @@
   --contrast-color: #ffffff;
 }
 
+
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
@@ -963,6 +964,25 @@ section,
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
+
+* Make portfolio videos always visible */
+.portfolio-info {
+  position: static;
+  opacity: 1 !important;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.portfolio-item {
+  overflow: visible;
+}
+
+.portfolio-info .ratio {
+  margin-top: 10px;
+}
+
+
 .portfolio .portfolio-filters {
   padding: 0;
   margin: 0 auto 20px auto;
