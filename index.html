@@ -33,7 +33,6 @@
   <link rel="stylesheet" href="assets/popup/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="assets/popup/css/elegant-icons.css" type="text/css">
 
-  <link href="assets/popup/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/popup/css/owl.carousel.min.css" type="text/css">
  
    <link rel="stylesheet" href="assets/popup/css/slicknav.min.css" type="text/css">
@@ -64,6 +63,24 @@
 </head>
 
 <body class="index-page">
+
+<!-- Enter Button Overlay -->
+<div id="enterOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#111; color:#fff; display:flex; align-items:center; justify-content:center; z-index:9999;">
+  <div style="text-align:center">
+    <h2 style="margin-bottom: 20px;">Welcome to Multimedia VA</h2>
+    <button onclick="enterSite()" class="btn btn-primary" style="font-size: 18px; padding: 12px 32px;">Enter</button>
+  </div>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="assets/audio/intro.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+
+
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
@@ -104,7 +121,7 @@
     </section><!-- /Hero Section -->
 
 <!-- Portfolio Section Begin -->
-<section class="portfolio spad">
+<section id="portfolio" class="portfolio spad">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -255,16 +272,71 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="pagination__option">
-          <a href="#" class="arrow__pagination left__arrow"><span class="arrow_left"></span> Prev</a>
-          <a href="#" class="number__pagination">1</a>
-          <a href="#" class="number__pagination">2</a>
-          <a href="#" class="arrow__pagination right__arrow">Next <span class="arrow_right"></span></a>
+          <a href="javascript:void(0);" id="prevFilter" class="arrow__pagination left__arrow"><span class="arrow_left"></span> Prev</a>
+          <a href="javascript:void(0);" id="nextFilter" class="arrow__pagination right__arrow">Next <span class="arrow_right"></span></a>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 <!-- Portfolio Section End -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll(".portfolio__filter li");
+    const filters = Array.from(filterButtons).map(btn => btn.getAttribute("data-filter"));
+    let currentIndex = 0;
+
+    function applyFilter(index) {
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      const selectedFilter = filters[index];
+      document.querySelector(`.portfolio__filter li[data-filter="${selectedFilter}"]`).classList.add("active");
+
+      // Apply the filter to items
+      const items = document.querySelectorAll(".portfolio__gallery .mix");
+      items.forEach(item => {
+        if (selectedFilter === "*" || item.classList.contains(selectedFilter.substring(1))) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    document.getElementById("nextFilter").addEventListener("click", function (e) {
+      e.preventDefault();
+      currentIndex = (currentIndex + 1) % filters.length;
+      applyFilter(currentIndex);
+    });
+
+    document.getElementById("prevFilter").addEventListener("click", function (e) {
+      e.preventDefault();
+      currentIndex = (currentIndex - 1 + filters.length) % filters.length;
+      applyFilter(currentIndex);
+    });
+
+    // Initialize
+    applyFilter(currentIndex);
+  });
+
+  document.getElementById("nextFilter").addEventListener("click", function (e) {
+  e.preventDefault();
+  currentIndex = (currentIndex + 1) % filters.length;
+  applyFilter(currentIndex);
+  document.querySelector("#portfolio").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("prevFilter").addEventListener("click", function (e) {
+  e.preventDefault();
+  currentIndex = (currentIndex - 1 + filters.length) % filters.length;
+  applyFilter(currentIndex);
+  document.querySelector("#portfolio").scrollIntoView({ behavior: "smooth" });
+});
+
+
+</script>
+
 
 <!-- Services Section -->
 <section id="services" class="services section">
@@ -1070,6 +1142,25 @@
  <script src="assets/popup/js/jquery.slicknav.js"></script>
  <script src="assets/popup/js/owl.carousel.min.js"></script>
  <script src="assets/popup/js/main.js"></script>
+
+
+<script>
+  function enterSite() {
+    const audio = document.getElementById("bgMusic");
+    const overlay = document.getElementById("enterOverlay");
+
+    // Set volume and play
+    audio.volume = 0.5; // Optional: adjust to desired volume
+    audio.play().then(() => {
+      console.log("Audio is playing");
+    }).catch(err => {
+      console.error("Autoplay blocked:", err);
+    });
+
+    // Hide overlay
+    overlay.style.display = "none";
+  }
+</script>
 
 
 </body>
